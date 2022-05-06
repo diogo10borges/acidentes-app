@@ -1,2 +1,2 @@
 streamlit_folium>=0.6
-sklearn>=0.22
+scikit-learn
