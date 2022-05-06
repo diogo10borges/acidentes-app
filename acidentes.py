@@ -9,14 +9,21 @@ from streamlit_folium import folium_static
 import folium
 import pandas as pd
 import numpy as np
-#import matplotlib.pyplot as plt
-#import seaborn as sns
-#import datetime
-
 from sklearn.cluster import DBSCAN
 
+# from PIL import Image
+# img = Image.open(r'C:\Users\diogo.borges\Documents\Acidentes\car-crash-icon.png')
+
+
 from PIL import Image
-img = Image.open(r'C:\Users\diogo.borges\Documents\Acidentes\car-crash-icon.png')
+import requests
+from io import BytesIO
+
+response = requests.get('https://i.imgur.com/hPQDels.jpeg', stream=True)
+img = Image.open(BytesIO(response.content))
+
+#img.show()
+
 
 st.set_page_config(layout="wide",page_title='Acidentes Lisboa 2019',page_icon=img)
 
@@ -73,20 +80,22 @@ with col2:
     st.write(""" ## Identificação de Pontos Negros tendo em conta fatores
              """)
     
+    # @st.cache
+    # def load_distances(path):
+    #     df_distances = pd.read_csv(path,sep=';',decimal=',',usecols=[1, 5],encoding='latin1')
+    #     separa=df_distances['Name'].str.split(' - ', expand=True)
+        
+    #     df_distances['IdOrigem'],df_distances['IdDestino']=separa[0], separa[1]
+    #     df_distances.drop('Name',axis=1,inplace=True)
+    #     df_distances.rename(columns = {'Total_Length':'Distancia'}, inplace = True)
+    #     df_distances['IdOrigem'],df_distances['IdDestino']=df_distances['IdOrigem'].astype('int64'),df_distances['IdDestino'].astype('int64')
+    #     return df_distances
+    # df_distances = load_distances(r'C:\Users\diogo.borges\Documents\Acidentes\distances.txt')
+    url = 'https://drive.google.com/file/d/13iSF0l3u1rCHjBv9HsWJrBn81tKFApjS/view?usp=sharing'
+    path = 'https://drive.google.com/uc?id='+url.split('/')[-2]     
+    df_distances = pd.read_csv(path)
     
     @st.cache
-    def load_distances(path):
-        df_distances = pd.read_csv(path,sep=';',decimal=',',usecols=[1, 5],encoding='latin1')
-        separa=df_distances['Name'].str.split(' - ', expand=True)
-        
-        df_distances['IdOrigem'],df_distances['IdDestino']=separa[0], separa[1]
-        df_distances.drop('Name',axis=1,inplace=True)
-        df_distances.rename(columns = {'Total_Length':'Distancia'}, inplace = True)
-        df_distances['IdOrigem'],df_distances['IdDestino']=df_distances['IdOrigem'].astype('int64'),df_distances['IdDestino'].astype('int64')
-        return df_distances
-    df_distances = load_distances(r'C:\Users\diogo.borges\Documents\Acidentes\distances.txt')
-      
-    #@st.cache
     def filtra_acidentes (column,value):
         filt_acidentes=df_acidentes[(df_acidentes[column]==value)&(df_acidentes['latitude'].notnull())].copy()
         list_id=filt_acidentes['IdAcidente']
@@ -95,7 +104,7 @@ with col2:
         if matriz.empty:
             st.write( 'Não existe nenhum ponto negro com %s = %s' % (column,value))
         else:
-            v_max = round(max(np.max(matriz)))
+            v_max = round(max(np.max(matriz)))+100
             matriz.fillna(v_max,inplace=True)
             
             #DBSCAN
