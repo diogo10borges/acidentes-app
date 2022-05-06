@@ -99,12 +99,21 @@ with col2:
     def filtra_acidentes (column,value):
         filt_acidentes=df_acidentes[(df_acidentes[column]==value)&(df_acidentes['latitude'].notnull())].copy()
         list_id=filt_acidentes['IdAcidente']
-        filt_distances = df_distances[(df_distances.IdOrigem.isin(list_id))&(df_distances.IdDestino.isin(list_id))]
-        matriz = pd.pivot_table(filt_distances,values='Distancia',index=['IdOrigem'],columns=['IdDestino'])
-        if matriz.empty:
-            st.write( 'Não existe nenhum ponto negro com %s = %s' % (column,value))
+        #filt_distances = df_distances[(df_distances.IdOrigem.isin(list_id))&(df_distances.IdDestino.isin(list_id))]
+        #matriz = pd.pivot_table(filt_distances,values='Distancia',index=['IdOrigem'],columns=['IdDestino'])
+        matriz = pd.pivot_table(df_distances,values='Distancia',index=['IdOrigem'],columns=['IdDestino'])
+        matriz=matriz.filter(items=list_id.to_list(), axis=1)
+        matriz=matriz.filter(items=list_id.to_list(), axis=0)
+        if matriz.empty or matriz.isnull().all().all():
+            #st.write( 'Não existe nenhum ponto negro com %s = %s' % (column,value))
+            print('Não existe nenhum ponto negro com %s = %s' % (column,value))
         else:
             v_max = round(max(np.max(matriz)))+100
+            for i in list_id.to_list():
+                if i not in matriz.columns:
+                    matriz[i]=v_max
+                    matriz.loc[i]=v_max
+            
             matriz.fillna(v_max,inplace=True)
             
             #DBSCAN
@@ -116,7 +125,7 @@ with col2:
                 # st.write('O número de pontos negros são:',len(np.unique(labels))-1)
                     
                 filt_acidentes['Número do Ponto Negro']=labels
-                return map_clusters (filt_acidentes)
+                return map_clusters(filt_acidentes)
             else:
                 st.write( 'Não existe nenhum ponto negro com %s = %s' % (column,value) )
     
