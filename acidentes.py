@@ -126,7 +126,7 @@ with col2:
                       'Motociclos/Ciclomotores','Outros Veículos','Velocípedes','Peões']        
     make_choice = st.selectbox('Selecione um fator:', factor_columns,index=0)  
     if make_choice:
-        choose_value = st.radio(f'Selecione um valor para o/a {make_choice}:',sorted(df_acidentes['Hora'].unique()))
+        choose_value = st.radio(f'Selecione um valor para o/a {make_choice}:',sorted(df_acidentes[make_choice].unique()))
         filtra_acidentes (make_choice,choose_value)
     else:
         st.write('Ainda não foi selecionada nenhuma opção')
