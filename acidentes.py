@@ -95,7 +95,7 @@ with col2:
     path = 'https://drive.google.com/uc?id='+url.split('/')[-2]     
     df_distances = pd.read_csv(path)
     
-    @st.cache
+    #@st.cache
     def filtra_acidentes (column,value):
         filt_acidentes=df_acidentes[(df_acidentes[column]==value)&(df_acidentes['latitude'].notnull())].copy()
         list_id=filt_acidentes['IdAcidente']
