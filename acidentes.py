@@ -97,6 +97,8 @@ with col2:
     
     #@st.cache
     def filtra_acidentes (column,value):
+        column = 'Natureza'
+        value = 'Atropelamento de peões'
         filt_acidentes=df_acidentes[(df_acidentes[column]==value)&(df_acidentes['latitude'].notnull())].copy()
         list_id=filt_acidentes['IdAcidente']
         #filt_distances = df_distances[(df_distances.IdOrigem.isin(list_id))&(df_distances.IdDestino.isin(list_id))]
@@ -108,7 +110,7 @@ with col2:
             #st.write( 'Não existe nenhum ponto negro com %s = %s' % (column,value))
             print('Não existe nenhum ponto negro com %s = %s' % (column,value))
         else:
-            v_max = round(max(np.max(matriz)))+100
+            v_max = round(np.max(np.max(matriz)))+100
             for i in list_id.to_list():
                 if i not in matriz.columns:
                     matriz[i]=v_max
@@ -122,9 +124,10 @@ with col2:
             dbscan = DBSCAN(eps=eps,min_samples=n,metric='precomputed')
             labels=dbscan.fit_predict(matriz.values)
             if len(np.unique(labels))-1 > 0:
-                # st.write('O número de pontos negros são:',len(np.unique(labels))-1)
-                    
-                filt_acidentes['Número do Ponto Negro']=labels
+                st.write('Existem %d pontos negros com %s = %s' % (len(np.unique(labels))-1,column,value))
+                blackspot_df = pd.DataFrame.from_dict(dict(zip(matriz.index,labels)),columns=['Número do Ponto Negro'],orient='index').reset_index()    
+                filt_acidentes = pd.merge(filt_acidentes,blackspot_df,left_on='IdAcidente',right_on='index',how='inner')
+                #filt_acidentes['Número do Ponto Negro']=labels
                 return map_clusters(filt_acidentes)
             else:
                 st.write( 'Não existe nenhum ponto negro com %s = %s' % (column,value) )
