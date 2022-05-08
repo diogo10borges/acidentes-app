@@ -39,9 +39,12 @@ remap=dict(zip(np.unique(localizacao['Número do Ponto Negro']),range(1,len(np.u
 localizacao=localizacao.replace({"Número do Ponto Negro": remap})
 #display(df)
 url = 'https://drive.google.com/file/d/1MPMEP2a2rEHjhfu2nIf48srsqb2I3GCt/view?usp=sharing'
-path = 'https://drive.google.com/uc?id='+url.split('/')[-2]         
-df_acidentes = pd.read_csv(path,index_col=0,infer_datetime_format=True,parse_dates=['Datahora'],encoding='latin1')
-df_acidentes.rename(columns={'Latitude GPS':'latitude','Longitude GPS':'longitude'},inplace=True)
+path = 'https://drive.google.com/uc?id='+url.split('/')[-2]    
+@st.cache
+def load_acidentes2 (path):
+    df = pd.read_csv(path,index_col=0,infer_datetime_format=True,parse_dates=['Datahora'],encoding='latin1')
+    return df.rename(columns={'Latitude GPS':'latitude','Longitude GPS':'longitude'})
+df_acidentes = load_acidentes2(path)
 
 #st.title("Identificação de pontos de incidência dos acidentes rodoviários e da sua correlação com outros fatores")
 st.markdown("<h1 style='text-align: center; '>Identificação de pontos de incidência dos acidentes rodoviários e da sua correlação com outros fatores</h1>", unsafe_allow_html=True)
@@ -92,8 +95,11 @@ with col2:
     #     return df_distances
     # df_distances = load_distances(r'C:\Users\diogo.borges\Documents\Acidentes\distances.txt')
     url = 'https://drive.google.com/file/d/13iSF0l3u1rCHjBv9HsWJrBn81tKFApjS/view?usp=sharing'
-    path = 'https://drive.google.com/uc?id='+url.split('/')[-2]     
-    df_distances = pd.read_csv(path)
+    path = 'https://drive.google.com/uc?id='+url.split('/')[-2]
+    @st.cache
+    def load_distances (path):
+        return pd.read_csv(path)
+    df_distances = load_distances (path)
     
     #@st.cache
     def filtra_acidentes (column,value):
@@ -128,15 +134,15 @@ with col2:
                 blackspot_df = pd.DataFrame.from_dict(dict(zip(matriz.index,labels)),columns=['Número do Ponto Negro'],orient='index').reset_index().rename(columns={'index':'IdAcidente'})   
                 filt_acidentes = pd.merge(filt_acidentes,blackspot_df,on='IdAcidente',how='inner')
                 #filt_acidentes['Número do Ponto Negro']=labels
-                st.write(filt_acidentes[filt_acidentes['Número do Ponto Negro']!=-1].set_index('IdAcidente').sort_values(by='Datahora'))
+                st.write(filt_acidentes[filt_acidentes['Número do Ponto Negro']!=-1].set_index('IdAcidente').sort_values(by=['Número do Ponto Negro','Datahora']))
                 return map_clusters(filt_acidentes)
             else:
                 st.write( 'Não existe nenhum ponto negro com %s = %s' % (column,value) )
     
     factor_columns = ['','Natureza','Inclinação do Traçado','Berma do Traçado','Localização do Traçado','Estado Conservação',
                       'Marca Via','Obstáculos','Sinais','Sinais Luminosos','Factores Atmosféricos','Luminosidade',
-                      'Periodo','Hora','Dia da Semana','Mês','Inf/Ação','Automóvel ligeiro','Automóvel pesado',
-                      'Motociclos/Ciclomotores','Outros Veículos','Velocípedes','Peões']        
+                      'Periodo','Hora','Dia da Semana','Mês','Automóvel ligeiro','Automóvel pesado',
+                      'Motociclos/Ciclomotores','Outros Veículos','Velocípedes','Peões'] #'Inf/Ação',       
     make_choice = st.selectbox('Selecione um fator:', factor_columns,index=0)  
     if make_choice:
         choose_value = st.radio(f'Selecione um valor para o/a {make_choice}:',sorted(df_acidentes[make_choice].unique()))
