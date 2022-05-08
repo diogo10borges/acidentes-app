@@ -97,8 +97,8 @@ with col2:
     
     #@st.cache
     def filtra_acidentes (column,value):
-        column = 'Natureza'
-        value = 'Atropelamento de peões'
+        #column = 'Natureza'
+        #value = 'Atropelamento de peões'
         filt_acidentes=df_acidentes[(df_acidentes[column]==value)&(df_acidentes['latitude'].notnull())].copy()
         list_id=filt_acidentes['IdAcidente']
         #filt_distances = df_distances[(df_distances.IdOrigem.isin(list_id))&(df_distances.IdDestino.isin(list_id))]
