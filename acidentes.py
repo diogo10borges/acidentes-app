@@ -97,8 +97,8 @@ with col2:
     
     #@st.cache
     def filtra_acidentes (column,value):
-        #column = 'Natureza'
-        #value = 'Atropelamento de peões'
+        column = 'Natureza'
+        value = 'Colisão com fuga'
         filt_acidentes=df_acidentes[(df_acidentes[column]==value)&(df_acidentes['latitude'].notnull())].copy()
         list_id=filt_acidentes['IdAcidente']
         #filt_distances = df_distances[(df_distances.IdOrigem.isin(list_id))&(df_distances.IdDestino.isin(list_id))]
@@ -107,8 +107,8 @@ with col2:
         matriz=matriz.filter(items=list_id.to_list(), axis=1)
         matriz=matriz.filter(items=list_id.to_list(), axis=0)
         if matriz.empty or matriz.isnull().all().all():
-            #st.write( 'Não existe nenhum ponto negro com %s = %s' % (column,value))
-            print('Não existe nenhum ponto negro com %s = %s' % (column,value))
+            st.write( 'Não existe nenhum ponto negro com %s = %s' % (column,value))
+            #print('Não existe nenhum ponto negro com %s = %s' % (column,value))
         else:
             v_max = round(np.max(np.max(matriz)))+100
             for i in list_id.to_list():
@@ -125,9 +125,10 @@ with col2:
             labels=dbscan.fit_predict(matriz.values)
             if len(np.unique(labels))-1 > 0:
                 st.write('Existem %d pontos negros com %s = %s' % (len(np.unique(labels))-1,column,value))
-                blackspot_df = pd.DataFrame.from_dict(dict(zip(matriz.index,labels)),columns=['Número do Ponto Negro'],orient='index').reset_index()    
-                filt_acidentes = pd.merge(filt_acidentes,blackspot_df,left_on='IdAcidente',right_on='index',how='inner')
+                blackspot_df = pd.DataFrame.from_dict(dict(zip(matriz.index,labels)),columns=['Número do Ponto Negro'],orient='index').reset_index().rename(columns={'index':'IdAcidente'})   
+                filt_acidentes = pd.merge(filt_acidentes,blackspot_df,on='IdAcidente',on='index',how='inner')
                 #filt_acidentes['Número do Ponto Negro']=labels
+                st.write(filt_acidentes[filt_acidentes['Número do Ponto Negro']!=-1].set_index('IdAcidente').sort_values(by='Datahora'))
                 return map_clusters(filt_acidentes)
             else:
                 st.write( 'Não existe nenhum ponto negro com %s = %s' % (column,value) )
