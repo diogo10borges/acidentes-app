@@ -142,7 +142,7 @@ with col2:
     factor_columns = ['','Natureza','Inclinação do Traçado','Berma do Traçado','Localização do Traçado','Estado Conservação',
                       'Marca Via','Obstáculos','Sinais','Sinais Luminosos','Factores Atmosféricos','Luminosidade',
                       'Periodo','Hora','Dia da Semana','Mês','Automóvel ligeiro','Automóvel pesado',
-                      'Motociclos/Ciclomotores','Outros Veículos','Velocípedes','Peões'] #'Inf/Ação',       
+                      'Motociclos/Ciclomotores','Outros Veículos','Velocípedes','Peões'] + [c for c in df_acidentes.columns if 'Inf/Ação' in c]       
     make_choice = st.selectbox('Selecione um fator:', factor_columns,index=0)  
     if make_choice:
         choose_value = st.radio(f'Selecione um valor para o/a {make_choice}:',sorted(df_acidentes[make_choice].unique()))
