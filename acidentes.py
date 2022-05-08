@@ -126,7 +126,7 @@ with col2:
             if len(np.unique(labels))-1 > 0:
                 st.write('Existem %d pontos negros com %s = %s' % (len(np.unique(labels))-1,column,value))
                 blackspot_df = pd.DataFrame.from_dict(dict(zip(matriz.index,labels)),columns=['Número do Ponto Negro'],orient='index').reset_index().rename(columns={'index':'IdAcidente'})   
-                filt_acidentes = pd.merge(filt_acidentes,blackspot_df,on='IdAcidente',on='index',how='inner')
+                filt_acidentes = pd.merge(filt_acidentes,blackspot_df,on='IdAcidente',how='inner')
                 #filt_acidentes['Número do Ponto Negro']=labels
                 st.write(filt_acidentes[filt_acidentes['Número do Ponto Negro']!=-1].set_index('IdAcidente').sort_values(by='Datahora'))
                 return map_clusters(filt_acidentes)
