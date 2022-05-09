@@ -49,8 +49,8 @@ df_acidentes = load_acidentes2(path)
 #st.title("Identificação de pontos de incidência dos acidentes rodoviários e da sua correlação com outros fatores")
 st.markdown("<h1 style='text-align: center; '>Identificação de pontos de incidência dos acidentes rodoviários e da sua correlação com outros fatores</h1>", unsafe_allow_html=True)
 
-col1, col2, col3 = st.columns((0.2,0.6,0.2))
-with col2:
+col1, col2, col3 = st.columns((0.4,0.2,0.4))
+with col1:
     st.write("""
              ## Identificação de Pontos Negros
              Pode clicar nos pontos para saber a que Ponto Negro pertence cada acidente.
@@ -79,7 +79,7 @@ with col2:
     merged_df = pd.merge(localizacao[localizacao['Número do Ponto Negro']==black_spot_number][['IdAcidente','Número do Ponto Negro']],df_acidentes,on='IdAcidente',how='inner')
     st.write(merged_df.set_index('IdAcidente').sort_values(by='Datahora'))
     
-    
+with col3:    
     st.write(""" ## Identificação de Pontos Negros tendo em conta fatores
              """)
     
