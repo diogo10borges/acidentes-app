@@ -121,10 +121,14 @@ with col2:
              ### Pontos Negros """)
              
     st.write( " Nesta página é possível identificar os pontos negros existentes no concelho de Lisboa bem como explorar informações associadas aos mesmos.")
-    st.write( """ Um ponto negro é um conceito dado pela [ANSR](http://www.ansr.pt/Noticias/Pages/A-ANSR-publica-a-Lista-atualizada-das-recomenda%C3%A7%C3%B5es-relativas-aos-Pontos-negros-%E2%80%93-2019.aspx) e pode ser definido como sendo um segmento de estrada até 200 metros onde, no ano em análise, existiram pelo menos cinco acidentes com feridos ligeiros, graves e/ou vítimas mortais, e onde o Indicador de Gravidade (IG) seja igual ou superior a 20. 
-             O Indicador de Gravidade (IG), por sua vez, é definido utilizando o número de feridos ligeiros (FL), o número de feridos graves (FG) e ainda o número de vítimas mortais (M) pela seguinte fórmula:
-             """)
-    st.markdown(r"$IG = 3 \times FL + 10 \times FG + 100 \times M$") 
+    #st.write( """ Um ponto negro é um conceito dado pela [ANSR](http://www.ansr.pt/Noticias/Pages/A-ANSR-publica-a-Lista-atualizada-das-recomenda%C3%A7%C3%B5es-relativas-aos-Pontos-negros-%E2%80%93-2019.aspx) e pode ser definido como sendo um segmento de estrada até 200 metros onde, no ano em análise, existiram pelo menos cinco acidentes com feridos ligeiros, graves e/ou vítimas mortais, e onde o Indicador de Gravidade (IG) seja igual ou superior a 20. 
+    #         O Indicador de Gravidade (IG), por sua vez, é definido utilizando o número de feridos ligeiros (FL), o número de feridos graves (FG) e ainda o número de vítimas mortais (M) pela seguinte fórmula:
+    #         """)
+    new_title = '<p style="font-size: 14px;">Um ponto negro é um conceito dado pela ANSR e pode ser definido como sendo um segmento de estrada até 200 metros onde, no ano em análise, existiram pelo menos cinco acidentes com feridos ligeiros, graves e/ou vítimas mortais, e onde o Indicador de Gravidade (IG) seja igual ou superior a 20. O Indicador de Gravidade (IG), por sua vez, é definido utilizando o número de feridos ligeiros (FL), o número de feridos graves (FG) e ainda o número de vítimas mortais (M) pela seguinte fórmula: IG = 3 x FL + 10 x FG + 100 x M</p>'
+    st.markdown(new_title, unsafe_allow_html=True)
+    st.markdown("""---""")   
+    #st.markdown(r"$IG = 3 \times FL + 10 \times FG + 100 \times M$") 
+    
     
     
    
@@ -138,8 +142,9 @@ with col2:
     factor_columns = ['Nenhum, considera todos os Pontos Negros existentes','Natureza','Inclinação do Traçado','Berma do Traçado','Localização do Traçado','Estado Conservação',
                       'Marca Via','Obstáculos','Sinais','Sinais Luminosos','Factores Atmosféricos','Luminosidade',
                       'Periodo','Hora','Dia da Semana','Mês','Automóvel ligeiro','Automóvel pesado',
-                      'Motociclos/Ciclomotores','Outros Veículos','Velocípedes','Peões'] + [c for c in df_acidentes.columns if 'Inf/Ação' in c]       
-    make_choice = st.selectbox('Selecione um fator para o qual quer verificar os pontos negros existentes:', factor_columns,index=0) 
+                      'Motociclos/Ciclomotores','Outros Veículos','Velocípedes','Peões'] + [c for c in df_acidentes.columns if 'Inf/Ação' in c] 
+                      
+    make_choice = st.selectbox('Selecione um fator para o qual quer verificar os pontos negros existentes:', factor_columns,index=0)   
     st.write("Pode clicar nos pontos para saber a que Ponto Negro pertence cada acidente e analisá-lo com mais detalhe na tabela abaixo.")
     if make_choice != 'Nenhum, considera todos os Pontos Negros existentes':
         choose_value = st.radio(f'Selecione um valor para o/a {make_choice}:',sorted(df_acidentes[make_choice].unique()))
