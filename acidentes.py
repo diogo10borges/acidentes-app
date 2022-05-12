@@ -112,18 +112,20 @@ def filtra_acidentes (column,value):
 
 
 #st.title("Identificação de pontos de incidência dos acidentes rodoviários e da sua correlação com outros fatores")
-st.markdown("<h1 style='text-align: center; '>Identificação de pontos de incidência dos acidentes rodoviários e da sua correlação com outros fatores</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; '>Acidentes Rodoviários em Lisboa</h2>", unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns((0.1,0.8,0.1))
 with col2:
-    st.write("""
-             ## Pontos Negros em Lisboa
+    st.write("Esta aplicação foi desenvolvida com base numa tese de mestrado (pode consultá-la [aqui](https://repositorio.ul.pt/bitstream/10451/51820/1/TM_Diogo_Borges.pdf)) que foi realizada no âmbito dos desafios [LxDataLab](https://lisboainteligente.cm-lisboa.pt/lxdatalab/desafios/identificacao-de-pontos-de-incidencia-dos-acidentes-rodoviarios-e-da-sua-correlacao-com-outros-fatores/).")
+    st.write( """        
+             ### Pontos Negros """)
+             
+    st.write( """ Aqui será possível analisar os diversos pontos negros existentes no concelho de Lisboa. 
+             Um ponto negro é considerado um segmento de estrada até 200 metros onde, no ano em análise, existiram pelo menos cinco acidentes com feridos ligeiros, graves e/ou vítimas mortais, e onde o Indicador de Gravidade (IG) seja igual ou superior a 20. 
+             O Indicador de Gravidade (IG), por sua vez, é definido utilizando o número de feridos ligeiros (FL), o número de feridos graves (FG) e ainda o número de vítimas mortais (M) pela seguinte fórmula:
              """)
+    st.markdown(r"$IG = 3 \times FL + 10 \times FG + 100 \times M$") 
     
-    
-    
-    
-
     
    
 #    st.write(""" ## Identificação de Pontos Negros tendo em conta fatores             """)
@@ -155,7 +157,7 @@ with col2:
     else:
         #st.write('Ainda não foi selecionada nenhuma opção')
         map_clusters (localizacao)
-        black_spot_number = st.number_input('Se quiser ver em detalhe algum dos pontos negros digite o seu número, se colocar 0 irá mostrar todos os que estão representados no mapa:',max_value = max(localizacao['Número do Ponto Negro']),step=1,format='%i')
+        black_spot_number = st.number_input('Para ver em detalhe cada acidente abrangido por determinado ponto negro digite o seu número, se colocar 0 irá mostrar todos os que estão representados no mapa:',max_value = max(localizacao['Número do Ponto Negro']),step=1,format='%i')
         if black_spot_number!=0:
             merged_df = pd.merge(localizacao[localizacao['Número do Ponto Negro']==black_spot_number][['IdAcidente','Número do Ponto Negro']],df_acidentes,on='IdAcidente',how='inner')
             st.write(merged_df.drop(columns=['IdAcidente']).sort_values(by=['Número do Ponto Negro','Datahora']))
