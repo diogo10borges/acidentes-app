@@ -23,9 +23,20 @@ response = requests.get('https://i.imgur.com/hPQDels.jpeg', stream=True)
 img = Image.open(BytesIO(response.content))
 
 #img.show()
-
-
 st.set_page_config(layout="wide",page_title='Acidentes Lisboa 2019',page_icon=img)
+col1, col2, col3, col4, col5 = st.columns((0.1,0.2,0.4,0.2,0.1))
+with col2:
+    response = requests.get('https://i.imgur.com/635lTRf.png', stream=True)  #https://lisboainteligente.cm-lisboa.pt/wp-content/uploads/listing-uploads/cover/2019/10/73081298_131144211622162_2569707524794089472_n.png
+    image = Image.open(BytesIO(response.content))
+    #image = Image.open(response.raw)
+    st.image(image,use_column_width =True)
+with col4:
+    response = requests.get('https://ciencias.ulisboa.pt/sites/default/files/fcul/institucional/normas_graficas/Ciencias_UL_Azul_H.png', stream=True)
+    image = Image.open(BytesIO(response.content))
+    #image = Image.open(response.raw)
+    st.image(image)
+
+
 
 url = 'https://drive.google.com/file/d/1TLKwhn7ihET-3f4L7Zokl77qlODm1GtY/view?usp=sharing'
 path = 'https://drive.google.com/uc?id='+url.split('/')[-2]
