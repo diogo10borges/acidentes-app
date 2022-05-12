@@ -120,8 +120,8 @@ with col2:
     st.write( """        
              ### Pontos Negros """)
              
-    st.write( """ Aqui será possível analisar os diversos pontos negros existentes no concelho de Lisboa. 
-             Um ponto negro é considerado um segmento de estrada até 200 metros onde, no ano em análise, existiram pelo menos cinco acidentes com feridos ligeiros, graves e/ou vítimas mortais, e onde o Indicador de Gravidade (IG) seja igual ou superior a 20. 
+    st.write( """ Nesta página identificam-se os pontos negros existentes no concelho de Lisboa. 
+             Um ponto negro é uma definição dada pela [ANSR](http://www.ansr.pt/Noticias/Pages/A-ANSR-publica-a-Lista-atualizada-das-recomenda%C3%A7%C3%B5es-relativas-aos-Pontos-negros-%E2%80%93-2019.aspx) e pode ser definido como sendo um segmento de estrada até 200 metros onde, no ano em análise, existiram pelo menos cinco acidentes com feridos ligeiros, graves e/ou vítimas mortais, e onde o Indicador de Gravidade (IG) seja igual ou superior a 20. 
              O Indicador de Gravidade (IG), por sua vez, é definido utilizando o número de feridos ligeiros (FL), o número de feridos graves (FG) e ainda o número de vítimas mortais (M) pela seguinte fórmula:
              """)
     st.markdown(r"$IG = 3 \times FL + 10 \times FG + 100 \times M$") 
