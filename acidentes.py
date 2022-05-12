@@ -139,7 +139,7 @@ with col2:
                       'Marca Via','Obstáculos','Sinais','Sinais Luminosos','Factores Atmosféricos','Luminosidade',
                       'Periodo','Hora','Dia da Semana','Mês','Automóvel ligeiro','Automóvel pesado',
                       'Motociclos/Ciclomotores','Outros Veículos','Velocípedes','Peões'] + [c for c in df_acidentes.columns if 'Inf/Ação' in c]       
-    make_choice = st.selectbox('Selecione um fator:', factor_columns,index=0) 
+    make_choice = st.selectbox('Selecione um fator para o qual quer verificar os pontos negros existentes:', factor_columns,index=0) 
     st.write("Pode clicar nos pontos para saber a que Ponto Negro pertence cada acidente e analisá-lo com mais detalhe na tabela abaixo.")
     if make_choice != 'Nenhum, considera todos os Pontos Negros existentes':
         choose_value = st.radio(f'Selecione um valor para o/a {make_choice}:',sorted(df_acidentes[make_choice].unique()))
