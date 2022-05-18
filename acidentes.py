@@ -15,15 +15,15 @@ from sklearn.cluster import DBSCAN
 # img = Image.open(r'C:\Users\diogo.borges\Documents\Acidentes\car-crash-icon.png')
 
 
-# from PIL import Image
-# import requests
-# from io import BytesIO
+from PIL import Image
+import requests
+from io import BytesIO
 
-# response = requests.get('https://i.imgur.com/hPQDels.jpeg', stream=True)
-# img = Image.open(BytesIO(response.content))
+response = requests.get('https://i.imgur.com/hPQDels.jpeg', stream=True)
+img = Image.open(BytesIO(response.content))
 
 # #img.show()
-# st.set_page_config(layout="wide",page_title='Acidentes Lisboa 2019',page_icon=img)
+st.set_page_config(layout="wide",page_icon=img) #,page_title='Acidentes Lisboa 2019'
 # col1, col2, col3, col4, col5 = st.columns((0.1,0.2,0.4,0.2,0.1))
 # with col2:
 #     response = requests.get('https://i.imgur.com/635lTRf.png', stream=True)  #https://lisboainteligente.cm-lisboa.pt/wp-content/uploads/listing-uploads/cover/2019/10/73081298_131144211622162_2569707524794089472_n.png
