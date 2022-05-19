@@ -128,16 +128,16 @@ def filtra_acidentes (column,value):
 col1, col2, col3 = st.columns((0.1,0.8,0.1))
 with col2:
     #st.write("Esta aplicação foi desenvolvida com base numa tese de mestrado (pode consultá-la [aqui](https://repositorio.ul.pt/bitstream/10451/51820/1/TM_Diogo_Borges.pdf)) que foi realizada no âmbito dos desafios [LxDataLab](https://lisboainteligente.cm-lisboa.pt/lxdatalab/desafios/identificacao-de-pontos-de-incidencia-dos-acidentes-rodoviarios-e-da-sua-correlacao-com-outros-fatores/).")
-    st.write( """        
+    #st.write( """        
              ### Pontos Negros """)
              
-    st.write( " Nesta página é possível identificar os pontos negros existentes no concelho de Lisboa bem como explorar informações associadas aos mesmos.")
+    #st.write( " Nesta página é possível identificar os pontos negros existentes no concelho de Lisboa bem como explorar informações associadas aos mesmos.")
     #st.write( """ Um ponto negro é um conceito dado pela [ANSR](http://www.ansr.pt/Noticias/Pages/A-ANSR-publica-a-Lista-atualizada-das-recomenda%C3%A7%C3%B5es-relativas-aos-Pontos-negros-%E2%80%93-2019.aspx) e pode ser definido como sendo um segmento de estrada até 200 metros onde, no ano em análise, existiram pelo menos cinco acidentes com feridos ligeiros, graves e/ou vítimas mortais, e onde o Indicador de Gravidade (IG) seja igual ou superior a 20. 
     #         O Indicador de Gravidade (IG), por sua vez, é definido utilizando o número de feridos ligeiros (FL), o número de feridos graves (FG) e ainda o número de vítimas mortais (M) pela seguinte fórmula:
     #         """)
     #new_title = '<p style="font-size: 14px;">Um ponto negro é um conceito dado pela ANSR e pode ser definido como sendo um segmento de estrada até 200 metros onde, no ano em análise, existiram pelo menos cinco acidentes com feridos ligeiros, graves e/ou vítimas mortais, e onde o Indicador de Gravidade (IG) seja igual ou superior a 20. O Indicador de Gravidade (IG), por sua vez, é definido utilizando o número de feridos ligeiros (FL), o número de feridos graves (FG) e ainda o número de vítimas mortais (M) pela seguinte fórmula: IG = 3 x FL + 10 x FG + 100 x M</p>'
     #st.markdown(new_title, unsafe_allow_html=True)
-    st.markdown("""---""")   
+    #st.markdown("""---""")   
     #st.markdown(r"$IG = 3 \times FL + 10 \times FG + 100 \times M$") 
     
     
