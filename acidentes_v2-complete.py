@@ -44,7 +44,7 @@ path = 'Data/Acidentes.csv'
 st.write(path)
 @st.cache
 def load_acidentes(path):
-    return pd.read_csv(path)
+    return pd.read_csv(path,nrows=0)
 localizacao = load_acidentes(path)
 localizacao.rename(columns={'Latitude GPS':'latitude','Longitude GPS':'longitude','cluster':'Número do Ponto Negro'},inplace=True)
 localizacao=localizacao[localizacao['Número do Ponto Negro']!=-1]
