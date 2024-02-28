@@ -64,6 +64,12 @@ path = 'https://drive.google.com/uc?id='+url.split('/')[-2]
 def load_distances (path):
     return pd.read_csv(path)
 df_distances = load_distances (path)
+separa=df_distances['Name'].str.split(' - ', expand=True)
+
+df_distances['IdOrigem'],df_distances['IdDestino']=separa[0], separa[1]
+df_distances.drop('Name',axis=1,inplace=True)
+df_distances.rename(columns = {'Total_Length':'Distancia'}, inplace = True)
+df_distances['IdOrigem'],df_distances['IdDestino']=df_distances['IdOrigem'].astype('int64'),df_distances['IdDestino'].astype('int64')
 
 def   map_clusters (localizacao):       
     pt_inicial = localizacao['latitude'].mean(), localizacao['longitude'].mean()
