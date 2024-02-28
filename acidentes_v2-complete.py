@@ -64,6 +64,7 @@ path = 'https://drive.google.com/uc?id='+url.split('/')[-2]
 def load_distances (path):
     return pd.read_csv(path,sep=';',decimal=',',usecols=[1, 5],encoding='latin1')
 df_distances = load_distances (path)
+st.write(df_distances.columns.tolist())
 separa=df_distances['Name'].str.split(' - ', expand=True)
 
 df_distances['IdOrigem'],df_distances['IdDestino']=separa[0], separa[1]
