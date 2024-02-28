@@ -40,7 +40,7 @@ with col4:
 
 url = 'https://drive.google.com/file/d/1WOy7_dL893VkJgIIZCJ2rmLYUJ-mc7zz/view?usp=sharing'
 path = 'https://drive.google.com/uc?id='+url.split('/')[-2]
-@st.cache
+@st.cache_data
 def load_acidentes(path):
     return pd.read_csv(path,index_col=0,infer_datetime_format=True,parse_dates=['Datahora'],encoding='latin1')
 localizacao = load_acidentes(path)
@@ -52,7 +52,7 @@ localizacao=localizacao.replace({"Número do Ponto Negro": remap})
 
 url = 'https://drive.google.com/file/d/1WOy7_dL893VkJgIIZCJ2rmLYUJ-mc7zz/view?usp=sharing'
 path = 'https://drive.google.com/uc?id='+url.split('/')[-2]    
-@st.cache
+@st.cache_data
 def load_acidentes2 (path):
     df = pd.read_csv(path,index_col=0,infer_datetime_format=True,parse_dates=['Datahora'],encoding='latin1')
     return df.rename(columns={'Latitude GPS':'latitude','Longitude GPS':'longitude'})
@@ -60,7 +60,7 @@ df_acidentes = load_acidentes2(path)
 
 url = 'https://drive.google.com/file/d/1nVEqRDx7w9adMsdfdo4Dsrft0Q7RaIbP/view?usp=sharing'
 path = 'https://drive.google.com/uc?id='+url.split('/')[-2]
-@st.cache
+@st.cache_data
 def load_distances (path):
     return pd.read_csv(path)
 df_distances = load_distances (path)
@@ -175,7 +175,7 @@ with col2:
     else:
         #st.write('Ainda não foi selecionada nenhuma opção')
         map_clusters (localizacao)
-        st.write(localizacao['Número do Ponto Negro'].unique())
+        st.write(max(localizacao['Número do Ponto Negro']))
         black_spot_number = st.number_input('Para ver em detalhe cada acidente abrangido por determinado ponto negro digite o seu número, se colocar 0 irá mostrar todos os que estão representados no mapa:',max_value = max(localizacao['Número do Ponto Negro']),step=1,format='%i')
         if black_spot_number!=0:
             merged_df = pd.merge(localizacao[localizacao['Número do Ponto Negro']==black_spot_number][['IdAcidente','Número do Ponto Negro']],df_acidentes,on='IdAcidente',how='inner')
