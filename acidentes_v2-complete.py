@@ -43,6 +43,7 @@ path = 'https://drive.google.com/uc?id='+url.split('/')[-2]
 path = 'Data/Acidentes.csv'
 @st.cache
 def load_acidentes(path):
+    print(path)
     return pd.read_csv(path)
 localizacao = load_acidentes(path)
 localizacao.rename(columns={'Latitude GPS':'latitude','Longitude GPS':'longitude','cluster':'Número do Ponto Negro'},inplace=True)
