@@ -45,11 +45,11 @@ st.write(path)
 @st.cache
 def load_acidentes(path):
     return pd.read_csv(path,nrows=0)
-localizacao = load_acidentes(path)
-localizacao.rename(columns={'Latitude GPS':'latitude','Longitude GPS':'longitude','cluster':'Número do Ponto Negro'},inplace=True)
-localizacao=localizacao[localizacao['Número do Ponto Negro']!=-1]
-remap=dict(zip(np.unique(localizacao['Número do Ponto Negro']),range(1,len(np.unique(localizacao['Número do Ponto Negro']))+1)))
-localizacao=localizacao.replace({"Número do Ponto Negro": remap})
+#localizacao = load_acidentes(path)
+#localizacao.rename(columns={'Latitude GPS':'latitude','Longitude GPS':'longitude','cluster':'Número do Ponto Negro'},inplace=True)
+#localizacao=localizacao[localizacao['Número do Ponto Negro']!=-1]
+#remap=dict(zip(np.unique(localizacao['Número do Ponto Negro']),range(1,len(np.unique(localizacao['Número do Ponto Negro']))+1)))
+#localizacao=localizacao.replace({"Número do Ponto Negro": remap})
 
 url = 'https://drive.google.com/file/d/1WOy7_dL893VkJgIIZCJ2rmLYUJ-mc7zz/view?usp=sharing'
 path = 'https://drive.google.com/uc?id='+url.split('/')[-2]    
