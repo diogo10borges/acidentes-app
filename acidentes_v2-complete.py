@@ -58,19 +58,19 @@ def load_acidentes2 (path):
     return df.rename(columns={'Latitude GPS':'latitude','Longitude GPS':'longitude'})
 df_acidentes = load_acidentes2(path)
 
-url = 'https://drive.google.com/file/d/1nVEqRDx7w9adMsdfdo4Dsrft0Q7RaIbP/view?usp=sharing'
-path = 'https://drive.google.com/uc?id='+url.split('/')[-2]
-@st.cache_data
-def load_distances (path):
-    return pd.read_csv(path,nrows=0)#,sep=';',decimal=',',usecols=[1, 5],encoding='latin1')
-df_distances = load_distances (path)
-st.write(df_distances.columns.tolist())
-separa=df_distances['Name'].str.split(' - ', expand=True)
+#url = 'https://drive.google.com/file/d/1nVEqRDx7w9adMsdfdo4Dsrft0Q7RaIbP/view?usp=sharing'
+#path = 'https://drive.google.com/uc?id='+url.split('/')[-2]
+#@st.cache_data
+#def load_distances (path):
+#    return pd.read_csv(path,nrows=0)#,sep=';',decimal=',',usecols=[1, 5],encoding='latin1')
+#df_distances = load_distances (path)
+#st.write(df_distances.columns.tolist())
+#separa=df_distances['Name'].str.split(' - ', expand=True)
 
-df_distances['IdOrigem'],df_distances['IdDestino']=separa[0], separa[1]
-df_distances.drop('Name',axis=1,inplace=True)
-df_distances.rename(columns = {'Total_Length':'Distancia'}, inplace = True)
-df_distances['IdOrigem'],df_distances['IdDestino']=df_distances['IdOrigem'].astype('int64'),df_distances['IdDestino'].astype('int64')
+#df_distances['IdOrigem'],df_distances['IdDestino']=separa[0], separa[1]
+#df_distances.drop('Name',axis=1,inplace=True)
+#df_distances.rename(columns = {'Total_Length':'Distancia'}, inplace = True)
+#df_distances['IdOrigem'],df_distances['IdDestino']=df_distances['IdOrigem'].astype('int64'),df_distances['IdDestino'].astype('int64')
 
 def   map_clusters (localizacao):       
     pt_inicial = localizacao['latitude'].mean(), localizacao['longitude'].mean()
@@ -163,29 +163,29 @@ with col2:
                       'Periodo','Hora','Dia da Semana','Mês','Automóvel ligeiro','Automóvel pesado',
                       'Motociclos/Ciclomotores','Outros Veículos','Velocípedes','Peões'] + [c for c in df_acidentes.columns if 'Inf/Ação' in c] 
                       
-    make_choice = st.selectbox('Selecione um fator para o qual quer verificar os pontos negros existentes:', factor_columns,index=0)   
+    #make_choice = st.selectbox('Selecione um fator para o qual quer verificar os pontos negros existentes:', factor_columns,index=0)   
     #st.write("Pode clicar nos pontos para saber a que Ponto Negro pertence cada acidente e analisá-lo com mais detalhe na tabela abaixo.")
     st.markdown('<p style="font-size: 14px;">Pode clicar nos pontos para saber a que Ponto Negro pertence cada acidente e analisá-lo com mais detalhe na tabela abaixo.</p>', unsafe_allow_html=True)
-    if make_choice != 'Nenhum, considera todos os Pontos Negros existentes':
-        choose_value = st.radio(f'Selecione um valor para o/a {make_choice}:',sorted(df_acidentes[make_choice].unique()))
-        filt_acidentes = filtra_acidentes (make_choice,choose_value)
-        if type(filt_acidentes)!=int:
-            map_clusters (filt_acidentes)
-            black_spot_number = st.number_input('Se quiser ver em detalhe algum dos pontos negros digite o seu número, se colocar 0 irá mostrar todos os que estão representados no mapa:',min_value=0,max_value = int(max(localizacao['Número do Ponto Negro'])),step=1,format='%i')
-            if black_spot_number!=0:
-                st.write(filt_acidentes[filt_acidentes['Número do Ponto Negro']==black_spot_number].drop(columns=['IdAcidente']).sort_values(by=['Número do Ponto Negro','Datahora']))
-            else:
-                st.write(filt_acidentes[filt_acidentes['Número do Ponto Negro']!=-1].drop(columns=['IdAcidente']).sort_values(by=['Número do Ponto Negro','Datahora']))
+    #if make_choice != 'Nenhum, considera todos os Pontos Negros existentes':
+    #    choose_value = st.radio(f'Selecione um valor para o/a {make_choice}:',sorted(df_acidentes[make_choice].unique()))
+    #    filt_acidentes = filtra_acidentes (make_choice,choose_value)
+    #    if type(filt_acidentes)!=int:
+    #        map_clusters (filt_acidentes)
+    #        black_spot_number = st.number_input('Se quiser ver em detalhe algum dos pontos negros digite o seu número, se colocar 0 irá mostrar todos os que estão representados no mapa:',min_value=0,max_value = int(max(localizacao['Número do Ponto Negro'])),step=1,format='%i')
+    #        if black_spot_number!=0:
+    #            st.write(filt_acidentes[filt_acidentes['Número do Ponto Negro']==black_spot_number].drop(columns=['IdAcidente']).sort_values(by=['Número do Ponto Negro','Datahora']))
+    #        else:
+    #            st.write(filt_acidentes[filt_acidentes['Número do Ponto Negro']!=-1].drop(columns=['IdAcidente']).sort_values(by=['Número do Ponto Negro','Datahora']))
 
             
 
-    else:
+    #else:
         #st.write('Ainda não foi selecionada nenhuma opção')
-        map_clusters (localizacao)
-        black_spot_number = st.number_input(label = 'Para ver em detalhe cada acidente abrangido por determinado ponto negro digite o seu número, se colocar 0 irá mostrar todos os que estão representados no mapa:',min_value=0,max_value = int(max(localizacao['Número do Ponto Negro'])),step=1,format='%i')
-        if black_spot_number!=0:
-            merged_df = pd.merge(localizacao[localizacao['Número do Ponto Negro']==black_spot_number][['IdAcidente','Número do Ponto Negro']],df_acidentes,on='IdAcidente',how='inner')
-            st.write(merged_df.drop(columns=['IdAcidente']).sort_values(by=['Número do Ponto Negro','Datahora']))
-        else:
-            merged_df = pd.merge(localizacao[localizacao['Número do Ponto Negro']!=-1][['IdAcidente','Número do Ponto Negro']],df_acidentes,on='IdAcidente',how='inner')
-            st.write(merged_df.drop(columns=['IdAcidente']).sort_values(by=['Número do Ponto Negro','Datahora']))
+    map_clusters (localizacao)
+    black_spot_number = st.number_input(label = 'Para ver em detalhe cada acidente abrangido por determinado ponto negro digite o seu número, se colocar 0 irá mostrar todos os que estão representados no mapa:',min_value=0,max_value = int(max(localizacao['Número do Ponto Negro'])),step=1,format='%i')
+    if black_spot_number!=0:
+        merged_df = pd.merge(localizacao[localizacao['Número do Ponto Negro']==black_spot_number][['IdAcidente','Número do Ponto Negro']],df_acidentes,on='IdAcidente',how='inner')
+        st.write(merged_df.drop(columns=['IdAcidente']).sort_values(by=['Número do Ponto Negro','Datahora']))
+    else:
+        merged_df = pd.merge(localizacao[localizacao['Número do Ponto Negro']!=-1][['IdAcidente','Número do Ponto Negro']],df_acidentes,on='IdAcidente',how='inner')
+        st.write(merged_df.drop(columns=['IdAcidente']).sort_values(by=['Número do Ponto Negro','Datahora']))
