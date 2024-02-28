@@ -73,7 +73,7 @@ def   map_clusters (localizacao):
               '#890404','#BB5348','#8F7370','#A47245','#DBB65A','#FFD600','#CFC705','#B9CF05','#D7F44B','#75BB03','#498D38','#7EC685','#45F495','#1CEDAE','#029B84','#06FAF3','#0FA1CF','#0664C6','#02129D','#423C86','#C08CF4','#C647D6','#ED04BA','#F45DBC','#9B4B6A','#DB5A79','#FA0421','#CF9199',
               'aqua','silver','lime','tomato','olive','yellow','lawngreen','darkgreen','lightseagreen','teal','steelblue','blue','deeppink','crimson','pink']
     for i in range(0,len(localizacao)):
-        colouridx = localizacao['Número do Ponto Negro'].iloc[i]
+        colouridx = localizacao['Número do Ponto Negro'].iloc[i].astype(int)
         if colouridx == -1:
             pass
         else:
