@@ -38,7 +38,7 @@ with col4:
 
 
 
-url = 'https://drive.google.com/file/d/1TLKwhn7ihET-3f4L7Zokl77qlODm1GtY/view?usp=sharing'
+url = 'https://drive.google.com/file/d/1l6NSqvSh6TotpLEw4NKsX3QV9Dr3gMpn/view?usp=sharing'
 path = 'https://drive.google.com/uc?id='+url.split('/')[-2]
 @st.cache
 def load_acidentes(path):
@@ -49,7 +49,7 @@ localizacao=localizacao[localizacao['Número do Ponto Negro']!=-1]
 remap=dict(zip(np.unique(localizacao['Número do Ponto Negro']),range(1,len(np.unique(localizacao['Número do Ponto Negro']))+1)))
 localizacao=localizacao.replace({"Número do Ponto Negro": remap})
 
-url = 'https://drive.google.com/file/d/1MPMEP2a2rEHjhfu2nIf48srsqb2I3GCt/view?usp=sharing'
+url = 'https://drive.google.com/file/d/1WOy7_dL893VkJgIIZCJ2rmLYUJ-mc7zz/view?usp=sharing'
 path = 'https://drive.google.com/uc?id='+url.split('/')[-2]    
 @st.cache
 def load_acidentes2 (path):
@@ -57,7 +57,7 @@ def load_acidentes2 (path):
     return df.rename(columns={'Latitude GPS':'latitude','Longitude GPS':'longitude'})
 df_acidentes = load_acidentes2(path)
 
-url = 'https://drive.google.com/file/d/13iSF0l3u1rCHjBv9HsWJrBn81tKFApjS/view?usp=sharing'
+url = 'https://drive.google.com/file/d/1nVEqRDx7w9adMsdfdo4Dsrft0Q7RaIbP/view?usp=sharing'
 path = 'https://drive.google.com/uc?id='+url.split('/')[-2]
 @st.cache
 def load_distances (path):
