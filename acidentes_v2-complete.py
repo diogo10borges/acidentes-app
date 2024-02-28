@@ -41,9 +41,9 @@ with col4:
 url = 'https://drive.google.com/file/d/1l6NSqvSh6TotpLEw4NKsX3QV9Dr3gMpn/view?usp=sharing'
 path = 'https://drive.google.com/uc?id='+url.split('/')[-2]
 path = 'Data/Acidentes.csv'
+print(path)
 @st.cache
 def load_acidentes(path):
-    print(path)
     return pd.read_csv(path)
 localizacao = load_acidentes(path)
 localizacao.rename(columns={'Latitude GPS':'latitude','Longitude GPS':'longitude','cluster':'Número do Ponto Negro'},inplace=True)
