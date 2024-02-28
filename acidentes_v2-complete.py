@@ -62,7 +62,7 @@ url = 'https://drive.google.com/file/d/1nVEqRDx7w9adMsdfdo4Dsrft0Q7RaIbP/view?us
 path = 'https://drive.google.com/uc?id='+url.split('/')[-2]
 @st.cache_data
 def load_distances (path):
-    return pd.read_csv(path)
+    return pd.read_csv(path,sep=';',decimal=',',usecols=[1, 5],encoding='latin1')
 df_distances = load_distances (path)
 separa=df_distances['Name'].str.split(' - ', expand=True)
 
