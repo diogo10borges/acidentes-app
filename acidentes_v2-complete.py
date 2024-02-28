@@ -164,7 +164,6 @@ with col2:
         filt_acidentes = filtra_acidentes (make_choice,choose_value)
         if type(filt_acidentes)!=int:
             map_clusters (filt_acidentes)
-            st.write(localizacao['Número do Ponto Negro'].unique())
             black_spot_number = st.number_input('Se quiser ver em detalhe algum dos pontos negros digite o seu número, se colocar 0 irá mostrar todos os que estão representados no mapa:',max_value = max(localizacao['Número do Ponto Negro']),step=1,format='%i')
             if black_spot_number!=0:
                 st.write(filt_acidentes[filt_acidentes['Número do Ponto Negro']==black_spot_number].drop(columns=['IdAcidente']).sort_values(by=['Número do Ponto Negro','Datahora']))
@@ -176,6 +175,7 @@ with col2:
     else:
         #st.write('Ainda não foi selecionada nenhuma opção')
         map_clusters (localizacao)
+        st.write(localizacao['Número do Ponto Negro'].unique())
         black_spot_number = st.number_input('Para ver em detalhe cada acidente abrangido por determinado ponto negro digite o seu número, se colocar 0 irá mostrar todos os que estão representados no mapa:',max_value = max(localizacao['Número do Ponto Negro']),step=1,format='%i')
         if black_spot_number!=0:
             merged_df = pd.merge(localizacao[localizacao['Número do Ponto Negro']==black_spot_number][['IdAcidente','Número do Ponto Negro']],df_acidentes,on='IdAcidente',how='inner')
