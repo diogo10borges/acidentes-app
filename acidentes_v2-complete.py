@@ -45,6 +45,7 @@ def load_acidentes(path):
     return pd.read_csv(path,index_col=0,infer_datetime_format=True,parse_dates=['Datahora'],encoding='latin1')
 localizacao = load_acidentes(path)
 localizacao.rename(columns={'Latitude GPS':'latitude','Longitude GPS':'longitude','Numero Black Spot':'Número do Ponto Negro'},inplace=True)
+st.write(localizacao.columns.tolist())
 localizacao=localizacao[localizacao['Número do Ponto Negro']!=-1]
 remap=dict(zip(np.unique(localizacao['Número do Ponto Negro']),range(1,len(np.unique(localizacao['Número do Ponto Negro']))+1)))
 localizacao=localizacao.replace({"Número do Ponto Negro": remap})
