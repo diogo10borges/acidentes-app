@@ -13,7 +13,13 @@ from sklearn.cluster import DBSCAN
 
 # from PIL import Image
 # img = Image.open(r'C:\Users\diogo.borges\Documents\Acidentes\car-crash-icon.png')
-
+# Function to fetch image from URL and return as bytes
+def fetch_image(url):
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.content
+    else:
+        return None
 
 from PIL import Image
 import requests
@@ -21,16 +27,24 @@ from io import BytesIO
 
 # response = requests.get('https://i.imgur.com/hPQDels.jpeg', stream=True)
 # img = Image.open(BytesIO(response.content))
-st.image('https://i.imgur.com/hPQDels.jpeg')
+icon_bytes = fetch_image('https://i.imgur.com/hPQDels.jpeg')
 
-#img.show()
-st.set_page_config(layout="wide",page_title='Acidentes Lisboa 2019') #,page_icon=img
+# Check if the image was fetched successfully
+if icon_bytes:
+    # Open the image using PIL
+    icon_image = Image.open(BytesIO(icon_bytes))
+    # Set page configuration with the image as the page icon
+    st.set_page_config(layout="wide", page_title='Acidentes Lisboa 2019', page_icon=icon_image)
+else:
+    # Use a default page icon if the image couldn't be fetched
+    st.set_page_config(layout="wide", page_title='Acidentes Lisboa 2019', page_icon=":car:")
+    
 col1, col2, col3, col4, col5 = st.columns((0.1,0.2,0.4,0.2,0.1))
 with col2:
     response = requests.get('https://i.imgur.com/635lTRf.png', stream=True)  #https://lisboainteligente.cm-lisboa.pt/wp-content/uploads/listing-uploads/cover/2019/10/73081298_131144211622162_2569707524794089472_n.png
     image = Image.open(BytesIO(response.content))
     #image = Image.open(response.raw)
-    st.image(image,use_column_width =True)
+    st.image('https://i.imgur.com/635lTRf.png',use_column_width =True) #image
 with col4:
     response = requests.get('https://ciencias.ulisboa.pt/sites/default/files/fcul/institucional/normas_graficas/Ciencias_UL_Azul_H.png', stream=True)
     image = Image.open(BytesIO(response.content))
