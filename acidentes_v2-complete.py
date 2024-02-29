@@ -23,7 +23,7 @@ from io import BytesIO
 # img = Image.open(BytesIO(response.content))
 
 #img.show()
-st.set_page_config(layout="wide",page_title='Acidentes Lisboa 2019',page_icon=img)
+st.set_page_config(layout="wide",page_title='Acidentes Lisboa 2019') #,page_icon=img
 col1, col2, col3, col4, col5 = st.columns((0.1,0.2,0.4,0.2,0.1))
 with col2:
     response = requests.get('https://i.imgur.com/635lTRf.png', stream=True)  #https://lisboainteligente.cm-lisboa.pt/wp-content/uploads/listing-uploads/cover/2019/10/73081298_131144211622162_2569707524794089472_n.png
