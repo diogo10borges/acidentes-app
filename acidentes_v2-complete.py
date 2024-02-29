@@ -21,6 +21,7 @@ from io import BytesIO
 
 # response = requests.get('https://i.imgur.com/hPQDels.jpeg', stream=True)
 # img = Image.open(BytesIO(response.content))
+st.image('https://i.imgur.com/hPQDels.jpeg')
 
 #img.show()
 st.set_page_config(layout="wide",page_title='Acidentes Lisboa 2019') #,page_icon=img
