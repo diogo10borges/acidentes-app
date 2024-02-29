@@ -41,15 +41,15 @@ else:
     
 col1, col2, col3, col4, col5 = st.columns((0.1,0.2,0.4,0.2,0.1))
 with col2:
-    response = requests.get('https://i.imgur.com/635lTRf.png', stream=True)  #https://lisboainteligente.cm-lisboa.pt/wp-content/uploads/listing-uploads/cover/2019/10/73081298_131144211622162_2569707524794089472_n.png
-    image = Image.open(BytesIO(response.content))
+    #response = requests.get('https://i.imgur.com/635lTRf.png', stream=True)  #https://lisboainteligente.cm-lisboa.pt/wp-content/uploads/listing-uploads/cover/2019/10/73081298_131144211622162_2569707524794089472_n.png
+    #image = Image.open(BytesIO(response.content))
     #image = Image.open(response.raw)
     st.image('https://i.imgur.com/635lTRf.png',use_column_width =True) #image
 with col4:
-    response = requests.get('https://ciencias.ulisboa.pt/sites/default/files/fcul/institucional/normas_graficas/Ciencias_UL_Azul_H.png', stream=True)
-    image = Image.open(BytesIO(response.content))
+    #response = requests.get('https://ciencias.ulisboa.pt/sites/default/files/fcul/institucional/normas_graficas/Ciencias_UL_Azul_H.png', stream=True)
+    #image = Image.open(BytesIO(response.content))
     #image = Image.open(response.raw)
-    st.image(image)
+    st.image('https://ciencias.ulisboa.pt/sites/default/files/fcul/institucional/normas_graficas/Ciencias_UL_Azul_H.png')
 
 
 
