@@ -19,8 +19,8 @@ from PIL import Image
 import requests
 from io import BytesIO
 
-response = requests.get('https://i.imgur.com/hPQDels.jpeg', stream=True)
-#img = Image.open(BytesIO(response.content))
+# response = requests.get('https://i.imgur.com/hPQDels.jpeg', stream=True)
+# img = Image.open(BytesIO(response.content))
 
 #img.show()
 st.set_page_config(layout="wide",page_title='Acidentes Lisboa 2019',page_icon=img)
